@@ -1,5 +1,6 @@
 package model;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -12,10 +13,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class LottoResultTest {
     @ParameterizedTest
     @MethodSource("generateLottosResults")
+    @DisplayName("로또 수익률 계산")
     void lottosResults(List<List<Integer>> lottosList, WinningLotto winningLotto, long money, double expectedEarningRate) {
-        Lottos lottos = new Lottos(createRandomNumbers(lottosList));
-        lottos.generate(lottosList.size());
-        LottoResult lottoResult = new LottoResult(lottos, winningLotto);
+        LottoGame lottoGame = new LottoGame(createRandomNumbers(lottosList));
+        lottoGame.generate(lottosList.size());
+        LottoResult lottoResult = new LottoResult(lottoGame, winningLotto);
         assertThat(lottoResult.getEarningRate(money)).isEqualTo(expectedEarningRate);
     }
 

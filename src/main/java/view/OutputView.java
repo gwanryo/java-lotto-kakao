@@ -1,15 +1,15 @@
 package view;
 
 import model.LottoResult;
-import model.Lottos;
+import model.LottoGame;
 
 public class OutputView {
     public void putTimes(int times) {
         System.out.println(times + "개를 구매했습니다.");
     }
 
-    public void printLottos(Lottos lottos) {
-        lottos.getLottos().forEach(lotto -> System.out.println(lotto.toString()));
+    public void printLottos(LottoGame lottoGame) {
+        lottoGame.getLottoList().forEach(lotto -> System.out.println(lotto.toString()));
         System.out.println();
     }
 
