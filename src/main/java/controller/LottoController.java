@@ -18,7 +18,9 @@ public class LottoController {
     }
 
     public void run() {
-        long money = inputView.inputMoney();
+        inputView.inputMoney();
+        long money = inputView.getMoney();
+
         LottoGame lottoGame = new LottoGame(new LottoRandomNumbers());
 
         int times = lottoGame.calcTimes(money);
@@ -31,8 +33,11 @@ public class LottoController {
         lottoGame.auto(times);
         outputView.printLottos(lottoGame);
 
-        String lottoString = inputView.getLottoString();
-        int bonus = inputView.getBonus();
+        inputView.inputLastWeekLottoNumbersString();
+        String lottoString = inputView.getLastWeekLottoNumbersString();
+
+        inputView.inputBonusNumber();
+        int bonus = inputView.getBonusNumber();
 
         LottoDraw lottoDraw = new LottoDraw(lottoString, bonus);
         LottoResult lottoResult = new LottoResult(lottoGame, lottoDraw);
