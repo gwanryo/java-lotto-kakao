@@ -15,8 +15,8 @@ public class LottoGameTest {
     @Test
     @DisplayName("지정한 횟수만큼 로또 객체를 배열로 생성")
     void lottoGameLengthTest() {
-        LottoGame lottoGame = new LottoGame(new RandomNumbers());
-        lottoGame.generate(10);
+        LottoGame lottoGame = new LottoGame(new LottoRandomNumbers());
+        lottoGame.auto(10);
         List<Lotto> lottoList = lottoGame.getLottoList();
         assertThat(lottoList.size()).isEqualTo(10);
     }
@@ -26,7 +26,7 @@ public class LottoGameTest {
     @DisplayName("랜덤 생성한 숫자로 로또를 생성했을 때 정렬된 상태로 생성")
     void lottoGameResultTest(List<Integer> randomNumbers, int times, String expected) {
         LottoGame lottoGame = new LottoGame(createRandomNumbers(randomNumbers));
-        lottoGame.generate(times);
+        lottoGame.auto(times);
         assertThat(lottoGame.toString()).isEqualTo(expected);
     }
 
@@ -42,7 +42,7 @@ public class LottoGameTest {
     @MethodSource("generateTimesData")
     @DisplayName("랜덤 생성한 숫자로 로또를 생성했을 때 정렬된 상태로 생성")
     void lottosResultTest(long money, int expectedTimes) {
-        LottoGame lottoGame = new LottoGame(new RandomNumbers());
+        LottoGame lottoGame = new LottoGame(new LottoRandomNumbers());
         int times = lottoGame.calcTimes(money);
         assertThat(times).isEqualTo(expectedTimes);
     }
@@ -55,8 +55,8 @@ public class LottoGameTest {
         );
     }
 
-    private RandomNumbers createRandomNumbers(List<Integer> returnValue) {
-        return new RandomNumbers() {
+    private LottoRandomNumbers createRandomNumbers(List<Integer> returnValue) {
+        return new LottoRandomNumbers() {
             public List<Integer> generate() {
                 return returnValue;
             }

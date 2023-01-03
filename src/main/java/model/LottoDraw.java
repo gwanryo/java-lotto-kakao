@@ -4,11 +4,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class WinningLotto {
+public class LottoDraw {
     private final List<LottoNumber> lottoNumbers;
     private final LottoNumber bonusNumber;
 
-    public WinningLotto(String lottoString, int bonusNumber) {
+    public LottoDraw(String lottoString, int bonusNumber) {
         if (lottoString == null || lottoString.isEmpty()) {
             throw new IllegalArgumentException();
         }
@@ -17,6 +17,11 @@ public class WinningLotto {
                 .mapToInt(Integer::parseInt)
                 .mapToObj(LottoNumber::new)
                 .collect(Collectors.toList());
+
+        if (this.lottoNumbers.size() != 6) {
+            throw new IllegalArgumentException();
+        }
+
         this.bonusNumber = new LottoNumber(bonusNumber);
     }
 
@@ -25,4 +30,6 @@ public class WinningLotto {
         boolean isMatchBonus = lotto.getNumbers().stream().anyMatch(i -> i.equals(bonusNumber));
         return new LottoScore(matchNumber, isMatchBonus);
     }
+
+//    public SimpleEntry<Integer, Boolean> getScore(Lotto lotto) {
 }

@@ -10,13 +10,13 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class WinningLottoTest {
+public class LottoDrawTest {
     @ParameterizedTest
     @MethodSource("generateLottoScoreData")
     @DisplayName("지난 주 당첨번호와 로또 번호를 비교해 올바른 결과값 객체를 생성한다.")
     void lottoScoreTest(String lottoString, int bonusNumber, Lotto lotto, LottoScore expected) {
-        WinningLotto winningLotto = new WinningLotto(lottoString, bonusNumber);
-        LottoScore result = winningLotto.getScore(lotto);
+        LottoDraw lottoDraw = new LottoDraw(lottoString, bonusNumber);
+        LottoScore result = lottoDraw.getScore(lotto);
         assertThat(result).isEqualTo(expected);
     }
 

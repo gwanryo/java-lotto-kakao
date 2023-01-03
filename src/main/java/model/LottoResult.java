@@ -5,21 +5,21 @@ import java.util.stream.Collectors;
 
 public class LottoResult {
     private final LottoGame lottoGame;
-    private final WinningLotto winningLotto;
+    private final LottoDraw lottoDraw;
     private final LottoPrize lottoPrize;
 
+    public LottoResult(LottoGame lottoGame, LottoDraw lottoDraw) {
+        this.lottoGame = lottoGame;
+        this.lottoDraw = lottoDraw;
+        this.lottoPrize = new LottoPrize();
+    }
+
     private long getTotalPrize() {
-        return lottoGame.getLottoList().stream().mapToLong(l -> lottoPrize.getPrize(winningLotto.getScore(l))).sum();
+        return lottoGame.getLottoList().stream().mapToLong(l -> lottoPrize.getPrize(lottoDraw.getScore(l))).sum();
     }
 
     private List<LottoScore> getLottoScores() {
-        return lottoGame.getLottoList().stream().map(winningLotto::getScore).collect(Collectors.toList());
-    }
-
-    public LottoResult(LottoGame lottoGame, WinningLotto winningLotto) {
-        this.lottoGame = lottoGame;
-        this.winningLotto = winningLotto;
-        this.lottoPrize = new LottoPrize();
+        return lottoGame.getLottoList().stream().map(lottoDraw::getScore).collect(Collectors.toList());
     }
 
     public double getEarningRate(long money) {

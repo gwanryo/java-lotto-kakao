@@ -6,17 +6,18 @@ import java.util.stream.Collectors;
 
 public class LottoGame {
     private static final int LOTTO_COST = 1000;
-    private final RandomNumbers randomNumbers;
-    private List<Lotto> lottoList;
+    private final LottoRandomNumbers lottoRandomNumbers;
+    private final List<Lotto> lottoList;
 
-    public LottoGame(RandomNumbers randomNumbers) {
-        this.randomNumbers = randomNumbers;
+    public LottoGame(LottoRandomNumbers lottoRandomNumbers) {
+        this.lottoRandomNumbers = lottoRandomNumbers;
+        this.lottoList = new ArrayList<>();
     }
 
-    public void generate(int times) {
-        lottoList = new ArrayList<>();
+    public void auto(int times) {
+        lottoList.clear();
         for (int i = 0; i < times; i++) {
-            lottoList.add(new Lotto(randomNumbers.generate()));
+            lottoList.add(new Lotto(lottoRandomNumbers.generate()));
         }
     }
     public List<Lotto> getLottoList() {

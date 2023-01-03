@@ -1,7 +1,7 @@
 package view;
 
-import model.LottoResult;
 import model.LottoGame;
+import model.LottoResult;
 
 public class OutputView {
     public void putTimes(int times) {

@@ -1,9 +1,9 @@
 package controller;
 
-import model.LottoResult;
+import model.LottoDraw;
 import model.LottoGame;
-import model.RandomNumbers;
-import model.WinningLotto;
+import model.LottoRandomNumbers;
+import model.LottoResult;
 import view.InputView;
 import view.OutputView;
 
@@ -19,7 +19,7 @@ public class LottoController {
 
     public void run() {
         long money = inputView.inputMoney();
-        LottoGame lottoGame = new LottoGame(new RandomNumbers());
+        LottoGame lottoGame = new LottoGame(new LottoRandomNumbers());
 
         int times = lottoGame.calcTimes(money);
         outputView.putTimes(times);
@@ -28,14 +28,14 @@ public class LottoController {
             return;
         }
 
-        lottoGame.generate(times);
+        lottoGame.auto(times);
         outputView.printLottos(lottoGame);
 
         String lottoString = inputView.getLottoString();
         int bonus = inputView.getBonus();
 
-        WinningLotto winningLotto = new WinningLotto(lottoString, bonus);
-        LottoResult lottoResult = new LottoResult(lottoGame, winningLotto);
+        LottoDraw lottoDraw = new LottoDraw(lottoString, bonus);
+        LottoResult lottoResult = new LottoResult(lottoGame, lottoDraw);
 
         outputView.printResult(lottoResult);
         outputView.printEarningRate(lottoResult.getEarningRate(money));

@@ -13,8 +13,8 @@ public class LottoTest {
     @RepeatedTest(100)
     @DisplayName("랜덤 생성한 숫자를 기준으로 로또를 생성했을 때 정상적으로 생성된다.")
     void generateNumbersTest() {
-        RandomNumbers randomNumbers = new RandomNumbers();
-        List<Integer> generatedNumbers = randomNumbers.generate();
+        LottoRandomNumbers lottoRandomNumbers = new LottoRandomNumbers();
+        List<Integer> generatedNumbers = lottoRandomNumbers.generate();
         Lotto lotto = new Lotto(generatedNumbers);
         Collections.sort(generatedNumbers);
         assertThat(lotto.getNumbers()).isEqualTo(
