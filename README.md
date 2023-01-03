@@ -23,13 +23,14 @@
 
 ## 구조
 * Model
-  * Lotto: 로또 객체
+  * Lotto: 로또
+  * LottoGame: 로또 게임 (로또 여러 개)
+  * LottoNumber: 로또 숫자 (1 ~ 45)
   * LottoPrize: 로또 상금
   * LottoResult: 로또 당첨 결과
-  * Lottos: 로또 여러 번 시행 객체
   * LottoScore: 당첨 번호와 일치하는 숫자 갯수 객체
-  * WinningLotto: 당첨 번호
   * RandomNumbers: 로또 번호 생성
+  * WinningLotto: 당첨 번호
 * Controller
   * LottoController
 * View
