@@ -17,7 +17,6 @@ public class LottoPrizeTest {
     void prizeTest(LottoScore lottoScore, Long expectedPrize) {
         LottoPrize lottoPrize = new LottoPrize();
         Long prize = lottoPrize.getPrize(lottoScore);
-
         assertThat(prize).isEqualTo(expectedPrize);
     }
 
@@ -43,7 +42,6 @@ public class LottoPrizeTest {
     void formatPrizesTest(List<LottoScore> lottoScore, String expected) {
         LottoPrize lottoPrize = new LottoPrize();
         String result = lottoPrize.formatPrizes(lottoScore);
-
         assertThat(result).isEqualTo(expected);
     }
 

@@ -11,7 +11,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class LottoScoreTest {
-
     @ParameterizedTest
     @MethodSource("generateWrongScoreData")
     @DisplayName("잘못된 로또 점수 생성시 예외를 발생")

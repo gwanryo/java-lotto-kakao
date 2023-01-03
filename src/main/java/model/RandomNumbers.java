@@ -6,9 +6,9 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class RandomNumbers {
-    private static final Integer MIN_RANGE = 1;
-    private static final Integer MAX_RANGE = 45;
-    private static final Integer COUNT = 6;
+    private static final int MIN_RANGE = 1;
+    private static final int MAX_RANGE = 45;
+    private static final int COUNT = 6;
     private final List<Integer> intPool;
 
     public RandomNumbers() {
