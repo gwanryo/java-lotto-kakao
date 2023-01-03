@@ -1,24 +1,23 @@
 package model;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class Lotto {
-    private final List<Integer> lottoNumbers;
+    private final List<LottoNumber> lottoNumbers;
 
     public Lotto(List<Integer> lottoNumbers) {
-        this.lottoNumbers = new ArrayList<>(lottoNumbers);
+        this.lottoNumbers = lottoNumbers.stream().map(LottoNumber::new).collect(Collectors.toList());
         Collections.sort(this.lottoNumbers);
     }
 
-    public List<Integer> getNumbers() {
+    public List<LottoNumber> getNumbers() {
         return lottoNumbers;
     }
 
     @Override
     public String toString() {
-        return "[" + lottoNumbers.stream().map(i -> Integer.toString(i)).collect(Collectors.joining(", ")) + "]";
+        return "[" + lottoNumbers.stream().map(LottoNumber::toString).collect(Collectors.joining(", ")) + "]";
     }
 }

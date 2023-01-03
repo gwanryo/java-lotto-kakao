@@ -5,8 +5,8 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class WinningLotto {
-    private final List<Integer> lottoNumbers;
-    private final Integer bonusNumber;
+    private final List<LottoNumber> lottoNumbers;
+    private final LottoNumber bonusNumber;
 
     public WinningLotto(String lottoString, int bonusNumber) {
         if (lottoString == null || lottoString.isEmpty()) {
@@ -15,9 +15,9 @@ public class WinningLotto {
 
         this.lottoNumbers = Stream.of(lottoString.split(", "))
                 .mapToInt(Integer::parseInt)
-                .boxed()
+                .mapToObj(LottoNumber::new)
                 .collect(Collectors.toList());
-        this.bonusNumber = bonusNumber;
+        this.bonusNumber = new LottoNumber(bonusNumber);
     }
 
     public LottoScore getScore(Lotto lotto) {

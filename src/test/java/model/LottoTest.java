@@ -5,6 +5,7 @@ import org.junit.jupiter.api.RepeatedTest;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -16,6 +17,10 @@ public class LottoTest {
         List<Integer> generatedNumbers = randomNumbers.generate();
         Lotto lotto = new Lotto(generatedNumbers);
         Collections.sort(generatedNumbers);
-        assertThat(lotto.getNumbers()).isEqualTo(generatedNumbers);
+        assertThat(lotto.getNumbers()).isEqualTo(
+                generatedNumbers.stream()
+                        .map(LottoNumber::new)
+                        .collect(Collectors.toList())
+        );
     }
 }
