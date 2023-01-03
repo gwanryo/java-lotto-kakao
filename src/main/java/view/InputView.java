@@ -5,22 +5,38 @@ import java.util.Scanner;
 public class InputView {
     private final Scanner scanner;
 
+    private long money;
+    private String lastWeekLottoNumbersString;
+    private int bonusNumber;
+
     public InputView() {
         this.scanner = new Scanner(System.in);
     }
 
-    public Long inputMoney() {
+    public void inputMoney() {
         System.out.println("구매금액을 입력해 주세요.");
-        return Long.parseLong(scanner.nextLine());
+        money = Long.parseLong(scanner.nextLine());
     }
 
-    public String getLottoString() {
+    public long getMoney() {
+        return money;
+    }
+
+    public void inputLastWeekLottoNumbersString() {
         System.out.println("지난 주 당첨 번호를 입력해 주세요.");
-        return scanner.nextLine();
+        lastWeekLottoNumbersString = scanner.nextLine();
     }
 
-    public int getBonus() {
+    public String getLastWeekLottoNumbersString() {
+        return lastWeekLottoNumbersString;
+    }
+
+    public void inputBonusNumber() {
         System.out.println("보너스 볼을 입력해 주세요.");
-        return Integer.parseInt(scanner.nextLine());
+        bonusNumber = Integer.parseInt(scanner.nextLine());
+    }
+
+    public int getBonusNumber() {
+        return bonusNumber;
     }
 }
