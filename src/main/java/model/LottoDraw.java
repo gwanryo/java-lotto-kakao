@@ -30,6 +30,4 @@ public class LottoDraw {
         boolean isMatchBonus = lotto.getNumbers().stream().anyMatch(i -> i.equals(bonusNumber));
         return new LottoScore(matchNumber, isMatchBonus);
     }
-
-//    public SimpleEntry<Integer, Boolean> getScore(Lotto lotto) {
 }
