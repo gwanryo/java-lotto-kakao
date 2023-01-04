@@ -20,12 +20,13 @@ public class LottoGame {
             lottoList.add(new Lotto(lottoRandomNumbers.generate()));
         }
     }
+
     public List<Lotto> getLottoList() {
         return this.lottoList;
     }
 
-    public int calcTimes(Long money){
-        return (int)(money / LOTTO_COST);
+    public int calcTimes(Long money) {
+        return (int) (money / LOTTO_COST);
     }
 
     @Override

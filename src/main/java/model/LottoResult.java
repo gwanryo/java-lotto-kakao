@@ -1,18 +1,19 @@
 package model;
 
-import java.util.*;
-import java.util.AbstractMap.SimpleEntry;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import static model.LottoScore.getResultByRank;
 
 public class LottoResult {
     private static final LinkedHashMap<Integer, Long> prize = new LinkedHashMap<>() {{
-            put(3, 5000L);
-            put(4, 50_000L);
-            put(5, 1_500_000L);
-            put(6, 30_000_000L);
-            put(7, 2_000_000_000L);
+        put(3, 5000L);
+        put(4, 50_000L);
+        put(5, 1_500_000L);
+        put(6, 30_000_000L);
+        put(7, 2_000_000_000L);
     }};
 
     private final LottoGame lottoGame;
