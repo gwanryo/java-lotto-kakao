@@ -28,7 +28,6 @@
   * LottoGame: 로또 게임 (로또 여러 개)
   * LottoNumber: 로또 숫자 (1 ~ 45)
   * LottoRandomNumbers: 로또 난수 생성
-  * LottoPrize: 로또 상금
   * LottoResult: 로또 당첨 결과
   * LottoScore: 당첨 번호와 일치하는 숫자 갯수 객체
 * Controller
