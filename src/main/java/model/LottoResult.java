@@ -1,17 +1,18 @@
 package model;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
+import java.util.*;
+import java.util.AbstractMap.SimpleEntry;
 import java.util.stream.Collectors;
 
+import static model.LottoScore.getResultByRank;
+
 public class LottoResult {
-    private static final LinkedHashMap<LottoScore, Long> prize = new LinkedHashMap<>() {{
-        put(new LottoScore(3, false), 5000L);
-        put(new LottoScore(4, false), 50_000L);
-        put(new LottoScore(5, false), 1_500_000L);
-        put(new LottoScore(5, true), 30_000_000L);
-        put(new LottoScore(6, false), 2_000_000_000L);
+    private static final LinkedHashMap<Integer, Long> prize = new LinkedHashMap<>() {{
+            put(3, 5000L);
+            put(4, 50_000L);
+            put(5, 1_500_000L);
+            put(6, 30_000_000L);
+            put(7, 2_000_000_000L);
     }};
 
     private final LottoGame lottoGame;
@@ -22,35 +23,19 @@ public class LottoResult {
         this.lottoDraw = lottoDraw;
     }
 
-    private String formatPrize(LottoScore lottoScore) {
-        if (lottoScore.getMatchCount() == 5 && lottoScore.isMatchBonus()) {
-            return String.format("%d개 일치, 보너스 볼 일치 (%d원) - ", lottoScore.getMatchCount(), getPrize(lottoScore));
-        }
-        return String.format("%d개 일치 (%d원) - ", lottoScore.getMatchCount(), getPrize(lottoScore));
-    }
-
-    private Long getPrize(LottoScore lottoScore) {
-        if (lottoScore.getMatchCount() == 5) {
-            return prize.getOrDefault(lottoScore, 0L);
-        }
-        return prize.getOrDefault(new LottoScore(lottoScore.getMatchCount(), false), 0L);
-    }
-
-    private long getTotalPrize() {
-        return lottoGame.getLottoList().stream().mapToLong(l -> getPrize(lottoDraw.getScore(l))).sum();
-    }
-
     public double getEarningRate(long money) {
-        return (double) getTotalPrize() / money;
+        long totalPrize = lottoGame.getLottoList().stream().mapToLong(l -> prize.getOrDefault(lottoDraw.getRank(l), 0L)).sum();
+        return (double) totalPrize / money;
     }
 
     public String getResult() {
-        List<LottoScore> lottoScores = lottoGame.getLottoList().stream().map(lottoDraw::getScore).collect(Collectors.toList());
+        List<Integer> ranks = lottoGame.getLottoList().stream().map(lottoDraw::getRank).collect(Collectors.toList());
         List<String> prizeResults = new ArrayList<>();
-        prize.forEach((lottoScore, prizeMoney) -> {
-            long count = lottoScores.stream().filter(l -> l.compare(lottoScore)).count();
-            prizeResults.add(formatPrize(lottoScore) + count + "개");
+
+        prize.forEach((rank, prizeMoney) -> {
+            prizeResults.add(getResultByRank(rank, prizeMoney) + ranks.stream().filter(r -> r.equals(rank)).count() + "개");
         });
+
         return String.join("\n", prizeResults);
     }
 }

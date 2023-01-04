@@ -6,6 +6,7 @@ import java.util.stream.Stream;
 
 public class LottoDraw {
     private final List<LottoNumber> lottoNumbers;
+
     private final LottoNumber bonusNumber;
 
     public LottoDraw(String lottoString, int bonusNumber) {
@@ -25,9 +26,17 @@ public class LottoDraw {
         this.bonusNumber = new LottoNumber(bonusNumber);
     }
 
-    public LottoScore getScore(Lotto lotto) {
+    public List<LottoNumber> getLottoNumbers() {
+        return lottoNumbers;
+    }
+
+    public LottoNumber getBonusNumber() {
+        return bonusNumber;
+    }
+
+    public int getRank(Lotto lotto) {
         int matchNumber = (int) lotto.getNumbers().stream().filter(lottoNumbers::contains).count();
         boolean isMatchBonus = lotto.getNumbers().stream().anyMatch(i -> i.equals(bonusNumber));
-        return new LottoScore(matchNumber, isMatchBonus);
+        return new LottoScore(matchNumber, isMatchBonus).getRank();
     }
 }

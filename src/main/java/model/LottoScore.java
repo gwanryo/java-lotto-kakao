@@ -5,34 +5,42 @@ import java.util.Objects;
 public class LottoScore {
     private final int matchCount;
     private final boolean isMatchBonus;
+    private final int rank;
 
     public LottoScore(int matchCount, boolean isMatchBonus) {
+        this.matchCount = matchCount;
+        this.isMatchBonus = isMatchBonus;
+        this.rank = rank();
+    }
+
+    public int getRank() {
+        return rank;
+    }
+
+    private int rank() {
         if (matchCount < 0 || matchCount > 6 || (matchCount == 6 && isMatchBonus)) {
             throw new IllegalArgumentException();
         }
 
-        this.matchCount = matchCount;
-        this.isMatchBonus = isMatchBonus;
-    }
-
-    public int getMatchCount() {
-        return matchCount;
-    }
-
-    public boolean isMatchBonus() {
-        return isMatchBonus;
-    }
-
-    public boolean compare(LottoScore that) {
-        if (this.matchCount != that.matchCount) {
-            return false;
+        switch (matchCount) {
+            case 5:
+                return matchCount + Boolean.compare(isMatchBonus, false);
+            case 6:
+                return matchCount + 1;
+            default:
+                return matchCount;
         }
+    }
 
-        if (this.matchCount != 5) {
-            return true;
+    public static String getResultByRank(int rank, long prizeMoney) {
+        switch (rank) {
+            case 6:
+                return String.format("%d개 일치, 보너스 볼 일치 (%d원) - ", rank - 1, prizeMoney);
+            case 7:
+                return String.format("%d개 일치 (%d원) - ", rank - 1, prizeMoney);
+            default:
+                return String.format("%d개 일치 (%d원) - ", rank, prizeMoney);
         }
-
-        return this.isMatchBonus == that.isMatchBonus;
     }
 
     @Override

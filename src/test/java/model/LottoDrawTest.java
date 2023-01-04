@@ -14,22 +14,22 @@ public class LottoDrawTest {
     @ParameterizedTest
     @MethodSource("generateLottoScoreData")
     @DisplayName("지난 주 당첨번호와 로또 번호를 비교해 올바른 결과값 객체를 생성한다.")
-    void lottoScoreTest(String lottoString, int bonusNumber, Lotto lotto, LottoScore expected) {
+    void lottoScoreTest(String lottoString, int bonusNumber, Lotto lotto, int expected) {
         LottoDraw lottoDraw = new LottoDraw(lottoString, bonusNumber);
-        LottoScore result = lottoDraw.getScore(lotto);
+        int result = lottoDraw.getRank(lotto);
         assertThat(result).isEqualTo(expected);
     }
 
     static Stream<Arguments> generateLottoScoreData() {
         return Stream.of(
-                Arguments.of("1, 2, 3, 4, 5, 6", 7, new Lotto(List.of(1, 2, 3, 4, 5, 6)), new LottoScore(6, false)),
-                Arguments.of("1, 2, 3, 4, 5, 6", 7, new Lotto(List.of(1, 2, 3, 4, 6, 7)), new LottoScore(5, true)),
-                Arguments.of("1, 2, 3, 4, 5, 6", 12, new Lotto(List.of(1, 2, 3, 4, 5, 45)), new LottoScore(5, false)),
-                Arguments.of("1, 2, 3, 4, 5, 6", 12, new Lotto(List.of(1, 2, 3, 4, 44, 45)), new LottoScore(4, false)),
-                Arguments.of("1, 2, 3, 4, 5, 6", 12, new Lotto(List.of(1, 2, 3, 43, 44, 45)), new LottoScore(3, false)),
-                Arguments.of("1, 2, 3, 4, 5, 6", 12, new Lotto(List.of(1, 2, 43, 43, 44, 45)), new LottoScore(2, false)),
-                Arguments.of("1, 2, 3, 4, 5, 6", 12, new Lotto(List.of(1, 41, 42, 43, 44, 45)), new LottoScore(1, false)),
-                Arguments.of("1, 2, 3, 4, 5, 6", 12, new Lotto(List.of(40, 41, 42, 43, 44, 45)), new LottoScore(0, false))
+                Arguments.of("1, 2, 3, 4, 5, 6", 7, new Lotto(List.of(1, 2, 3, 4, 5, 6)), 7),
+                Arguments.of("1, 2, 3, 4, 5, 6", 7, new Lotto(List.of(1, 2, 3, 4, 6, 7)), 6),
+                Arguments.of("1, 2, 3, 4, 5, 6", 12, new Lotto(List.of(1, 2, 3, 4, 5, 45)), 5),
+                Arguments.of("1, 2, 3, 4, 5, 6", 12, new Lotto(List.of(1, 2, 3, 4, 44, 45)), 4),
+                Arguments.of("1, 2, 3, 4, 5, 6", 12, new Lotto(List.of(1, 2, 3, 43, 44, 45)), 3),
+                Arguments.of("1, 2, 3, 4, 5, 6", 12, new Lotto(List.of(1, 2, 43, 43, 44, 45)), 2),
+                Arguments.of("1, 2, 3, 4, 5, 6", 12, new Lotto(List.of(1, 41, 42, 43, 44, 45)), 1),
+                Arguments.of("1, 2, 3, 4, 5, 6", 12, new Lotto(List.of(40, 41, 42, 43, 44, 45)), 0)
         );
     }
 }

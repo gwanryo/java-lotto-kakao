@@ -26,41 +26,4 @@ public class LottoScoreTest {
                 Arguments.of(7, true)
         );
     }
-
-    @ParameterizedTest
-    @MethodSource("generateCompareData")
-    @DisplayName("동일한 로또 점수일 경우 비교 결과가 true가 됨")
-    void compareTest(LottoScore lottoScore, LottoScore that, boolean expected) {
-        assertThat(lottoScore.compare(that)).isEqualTo(expected);
-    }
-
-    static Stream<Arguments> generateCompareData() {
-        return Stream.of(
-                Arguments.of(
-                        new LottoScore(3, false),
-                        new LottoScore(3, false),
-                        true
-                ),
-                Arguments.of(
-                        new LottoScore(3, false),
-                        new LottoScore(3, true),
-                        true
-                ),
-                Arguments.of(
-                        new LottoScore(4, false),
-                        new LottoScore(4, true),
-                        true
-                ),
-                Arguments.of(
-                        new LottoScore(5, false),
-                        new LottoScore(5, true),
-                        false
-                ),
-                Arguments.of(
-                        new LottoScore(6, false),
-                        new LottoScore(6, false),
-                        true
-                )
-        );
-    }
 }
