@@ -19,7 +19,7 @@ public class LottoScore {
 
     private int rank() {
         if (matchCount < 0 || matchCount > 6 || (matchCount == 6 && isMatchBonus)) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("LottoScore must be in range 0 to 6! (Bonus must be false when score is 6)");
         }
 
         switch (matchCount) {

@@ -3,11 +3,13 @@ package model;
 import java.util.Objects;
 
 public class LottoNumber implements Comparable<LottoNumber> {
+    private static final int MIN_LOTTO_NUMBER = 1;
+    private static final int MAX_LOTTO_NUMBER = 45;
     private final int number;
 
     public LottoNumber(int number) {
-        if (number < 1 || number > 45) {
-            throw new IllegalArgumentException("LottoNumber must be in range 1 ~ 45");
+        if (number < MIN_LOTTO_NUMBER || number > MAX_LOTTO_NUMBER) {
+            throw new IllegalArgumentException(String.format("LottoNumber must be in range %d ~ %d", MIN_LOTTO_NUMBER, MAX_LOTTO_NUMBER));
         }
         this.number = number;
     }
