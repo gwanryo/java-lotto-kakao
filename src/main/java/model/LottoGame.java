@@ -3,6 +3,7 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class LottoGame {
     private static final int LOTTO_COST = 1000;
@@ -14,8 +15,21 @@ public class LottoGame {
         this.lottoList = new ArrayList<>();
     }
 
+    public void manual(List<String> lottoIntsStringList) {
+        if (lottoIntsStringList == null || lottoIntsStringList.isEmpty()) {
+            throw new IllegalArgumentException("Input lotto shall not be null or empty in manual mode!");
+        }
+
+        lottoIntsStringList.forEach(lottoIntsString -> {
+            List<Integer> lottoInts = Stream.of(lottoIntsString.split(", "))
+                    .mapToInt(Integer::parseInt)
+                    .boxed()
+                    .collect(Collectors.toList());
+            lottoList.add(new Lotto(lottoInts));
+        });
+    }
+
     public void auto(int times) {
-        lottoList.clear();
         for (int i = 0; i < times; i++) {
             lottoList.add(new Lotto(lottoRandomNumbers.generate()));
         }

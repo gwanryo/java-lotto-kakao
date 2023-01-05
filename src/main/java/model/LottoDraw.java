@@ -1,37 +1,33 @@
 package model;
 
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class LottoDraw {
+    private static final int LOTTO_NUMBERS_SIZE = 6;
     private final List<LottoNumber> lottoNumbers;
-
     private final LottoNumber bonusNumber;
 
     public LottoDraw(String lottoString, int bonusNumber) {
         if (lottoString == null || lottoString.isEmpty()) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Empty number is not allowed!");
         }
 
-        this.lottoNumbers = Stream.of(lottoString.split(", "))
+        List<Integer> lottoInts = Stream.of(lottoString.split(", "))
                 .mapToInt(Integer::parseInt)
-                .mapToObj(LottoNumber::new)
-                .collect(Collectors.toList());
+                .boxed()
+                .toList();
 
-        if (this.lottoNumbers.size() != 6) {
-            throw new IllegalArgumentException();
+        if (lottoInts.size() != LOTTO_NUMBERS_SIZE) {
+            throw new IllegalArgumentException(String.format("Cannot input more than %d numbers! (Input length: %d)", LOTTO_NUMBERS_SIZE, lottoInts.size()));
         }
 
+        if (lottoInts.contains(bonusNumber)) {
+            throw new IllegalArgumentException(String.format("Bonus number %d is already selected in Lotto!", bonusNumber));
+        }
+
+        this.lottoNumbers = lottoInts.stream().map(LottoNumber::new).toList();
         this.bonusNumber = new LottoNumber(bonusNumber);
-    }
-
-    public List<LottoNumber> getLottoNumbers() {
-        return lottoNumbers;
-    }
-
-    public LottoNumber getBonusNumber() {
-        return bonusNumber;
     }
 
     public int getRank(Lotto lotto) {

@@ -5,16 +5,44 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.NullAndEmptySource;
 
 import java.util.List;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class LottoGameTest {
+    @ParameterizedTest
+    @NullAndEmptySource
+    @DisplayName("입력한 문자열이 null 또는 빈 값일 경우 수동 로또 객체 생성 시 예외 발생")
+    void lottoGameManualNullOrEmptyTest(List<String> lottoIntsStringList) {
+        LottoGame lottoGame = new LottoGame(new LottoRandomNumbers());
+        assertThatThrownBy(() -> lottoGame.manual(lottoIntsStringList)).isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @ParameterizedTest
+    @MethodSource("generateLottoGameManualTest")
+    @DisplayName("입력한 문자열로 수동 로또 객체를 배열로 생성")
+    void lottoGameManualTest(List<String> lottoIntsStringList, int expectedLength) {
+        LottoGame lottoGame = new LottoGame(new LottoRandomNumbers());
+        lottoGame.manual(lottoIntsStringList);
+        List<Lotto> lottoList = lottoGame.getLottoList();
+        assertThat(lottoList.size()).isEqualTo(expectedLength);
+    }
+
+    static Stream<Arguments> generateLottoGameManualTest() {
+        return Stream.of(
+                Arguments.of(List.of("1, 2, 3, 4, 5, 6", "7, 8, 9, 10, 11, 12", "13, 14, 15, 16, 17, 18"), 3),
+                Arguments.of(List.of("1, 2, 3, 4, 5, 6", "45, 44, 43, 42, 41, 40"), 2),
+                Arguments.of(List.of("35, 36, 37, 38, 39, 40"), 1)
+        );
+    }
+
     @Test
-    @DisplayName("지정한 횟수만큼 로또 객체를 배열로 생성")
-    void lottoGameLengthTest() {
+    @DisplayName("지정한 자동 횟수만큼 로또 객체를 배열로 생성")
+    void lottoGameAutoTest() {
         LottoGame lottoGame = new LottoGame(new LottoRandomNumbers());
         lottoGame.auto(10);
         List<Lotto> lottoList = lottoGame.getLottoList();
