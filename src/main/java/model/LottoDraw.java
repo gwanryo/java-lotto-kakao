@@ -1,6 +1,7 @@
 package model;
 
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class LottoDraw {
@@ -16,7 +17,7 @@ public class LottoDraw {
         List<Integer> lottoInts = Stream.of(lottoString.split(", "))
                 .mapToInt(Integer::parseInt)
                 .boxed()
-                .toList();
+                .collect(Collectors.toList());
 
         if (lottoInts.size() != LOTTO_NUMBERS_SIZE) {
             throw new IllegalArgumentException(String.format("Cannot input more than %d numbers! (Input length: %d)", LOTTO_NUMBERS_SIZE, lottoInts.size()));
@@ -26,7 +27,7 @@ public class LottoDraw {
             throw new IllegalArgumentException(String.format("Bonus number %d is already selected in Lotto!", bonusNumber));
         }
 
-        this.lottoNumbers = lottoInts.stream().map(LottoNumber::new).toList();
+        this.lottoNumbers = lottoInts.stream().map(LottoNumber::new).collect(Collectors.toList());
         this.bonusNumber = new LottoNumber(bonusNumber);
     }
 
