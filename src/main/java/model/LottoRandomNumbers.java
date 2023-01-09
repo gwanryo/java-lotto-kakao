@@ -21,5 +21,4 @@ public class LottoRandomNumbers {
         Collections.shuffle(intPool);
         return intPool.subList(0, COUNT);
     }
-
 }

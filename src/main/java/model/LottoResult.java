@@ -5,7 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static model.LottoScore.getResultByRank;
+import static model.LottoDraw.getRankResult;
 
 public class LottoResult {
     private static final LinkedHashMap<Integer, Long> prize = new LinkedHashMap<>() {{
@@ -34,7 +34,7 @@ public class LottoResult {
         List<String> prizeResults = new ArrayList<>();
 
         prize.forEach((rank, prizeMoney) -> {
-            prizeResults.add(getResultByRank(rank, prizeMoney) + ranks.stream().filter(r -> r.equals(rank)).count() + "개");
+            prizeResults.add(getRankResult(rank, prizeMoney) + ranks.stream().filter(r -> r.equals(rank)).count() + "개");
         });
 
         return String.join("\n", prizeResults);

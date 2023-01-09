@@ -9,27 +9,25 @@ import java.util.List;
 public class LottoController {
     private final InputView inputView;
     private final OutputView outputView;
-    private final LottoGame lottoGame;
 
 
     public LottoController() {
         this.inputView = new InputView();
         this.outputView = new OutputView();
-        this.lottoGame = new LottoGame(new LottoRandomNumbers());
     }
 
-    public void purchase(long money) {
-        int times = lottoGame.calcTimes(money);
-
-        if (times < 1) {
-            return;
+    public LottoGame purchase(int totalTimes) {
+        if (totalTimes < 1) {
+            System.exit(0);
         }
+
+        LottoGame lottoGame = new LottoGame(new LottoRandomNumbers());
 
         inputView.inputManualTimes();
         int manualTimes = inputView.getManualTimes();
 
-        if (times < manualTimes) {
-            throw new RuntimeException(String.format("Can't buy more than %d times! (User input is %d times)", times, manualTimes));
+        if (totalTimes < manualTimes) {
+            throw new RuntimeException(String.format("Can't buy more than %d times! (User input is %d times)", totalTimes, manualTimes));
         }
 
         inputView.inputManualLottoIntsString();
@@ -37,21 +35,26 @@ public class LottoController {
 
         lottoGame.manual(manualLottoIntsStringList);
 
-        int autoTimes = times - manualTimes;
+        int autoTimes = totalTimes - manualTimes;
 
         if (autoTimes > 0) {
-            lottoGame.auto(times);
+            lottoGame.auto(autoTimes);
         }
 
-        outputView.printLottoPurchaseHistory(manualTimes, autoTimes);
-        outputView.printLottoList(lottoGame);
+        return lottoGame;
     }
 
     public void run() {
         inputView.inputMoney();
         long money = inputView.getMoney();
+        int totalTimes = LottoGame.calcTimes(money);
 
-        purchase(money);
+        LottoGame lottoGame = purchase(totalTimes);
+
+        int manualTimes = inputView.getManualTimes();
+
+        outputView.printLottoPurchaseHistory(manualTimes, totalTimes - manualTimes);
+        outputView.printLottoList(lottoGame);
 
         inputView.inputLastWeekLottoIntsString();
         String lottoString = inputView.getLastWeekLottoIntsString();

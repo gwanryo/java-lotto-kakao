@@ -21,17 +21,18 @@ public class LottoGame {
         }
 
         lottoIntsStringList.forEach(lottoIntsString -> {
-            List<Integer> lottoInts = Stream.of(lottoIntsString.split(", "))
+            List<Integer> lottoNums = Stream.of(lottoIntsString.split(","))
+                    .map(String::strip)
                     .mapToInt(Integer::parseInt)
                     .boxed()
                     .collect(Collectors.toList());
-            lottoList.add(new Lotto(lottoInts));
+            addLotto(lottoNums);
         });
     }
 
     public void auto(int times) {
         for (int i = 0; i < times; i++) {
-            lottoList.add(new Lotto(lottoRandomNumbers.generate()));
+            addLotto(lottoRandomNumbers.generate());
         }
     }
 
@@ -39,8 +40,13 @@ public class LottoGame {
         return this.lottoList;
     }
 
-    public int calcTimes(Long money) {
+    public static int calcTimes(Long money) {
         return (int) (money / LOTTO_COST);
+    }
+
+    private void addLotto(List<Integer> lottoNums) {
+        Lotto lotto = new Lotto(lottoNums);
+        lottoList.add(lotto);
     }
 
     @Override
