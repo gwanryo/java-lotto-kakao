@@ -71,7 +71,7 @@ public class LottoGameTest {
     @DisplayName("랜덤 생성한 숫자로 로또를 생성했을 때 정렬된 상태로 생성")
     void lottosResultTest(long money, int expectedTimes) {
         LottoGame lottoGame = new LottoGame(new LottoRandomNumbers());
-        int times = lottoGame.calcTimes(money);
+        int times = LottoGame.calcTimes(money);
         assertThat(times).isEqualTo(expectedTimes);
     }
 

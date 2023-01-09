@@ -1,6 +1,9 @@
 package controller;
 
-import model.*;
+import model.LottoDraw;
+import model.LottoGame;
+import model.LottoRandomNumbers;
+import model.LottoResult;
 import view.InputView;
 import view.OutputView;
 
